@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        table { border: 1px solid black; border-collapse: collapse; }
+        table th, table td { border: 1px solid black; }
+    </style>
+</head>
+<body>
+    <div>
+        <form id="airport-form">
+            <fieldset>
+                <legend>공항 등록</legend>
+                <div><input id="country" type="text" placeholder="국가"></div>
+                <div><input id="korName" type="text" placeholder="한글이름"></div>
+                <div><input id="engName" type="text" placeholder="영문이름"></div>
+                <div><input id="iataCode" type="text" placeholder="공항코드(iata)"></div>
+                <div><input id="icaoCode" type="text" placeholder="공항코드(icao)"></div>
+                <div><input id="terminalCnt" type="number" placeholder="운영 터미널 개수"></div>
+                <button type="submit">등록</button>
+            </fieldset>
+        </form>
+    </div>
+    <div>
+        <form id="airportTerminal-form">
+            <fieldset>
+                <legend>공항별 터미널 등록</legend>
+                <div><input id="airportId" type="number" placeholder="공항id"></div>
+                <div><input id="engName" type="text" placeholder="영문이름"></div>
+                <div><input id="korName" type="text" placeholder="한글이름"></div>
+                <div>
+                    <label for="route">운영노선: </label>
+                    <select name="route">
+                        <option value="all">국제선/국내선</option>
+                        <option value="international">국제선</option>
+                        <option value="domestic">국내선</option>
+                    </select>
+                </div>
+                <button type="submit">등록</button>
+            </fieldset>
+        </form>
+    </div>
+    <div>
+        <form id="airline-form">
+            <fieldset>
+                <legend>항공사 등록</legend>
+                <div><input id="engName" type="text" placeholder="영문이름"></div>
+                <div><input id="korName" type="text" placeholder="한글이름"></div>
+                <div><input id="iataCode" type="text" placeholder="항공사코드(iata)"></div>
+                <div><input id="icaoCode" type="text" placeholder="항공사코드(icao)"></div>
+                <div>
+                    <label for="activeStatus">현재 운영 상태: </label>
+                    <select name="activeStatus">
+                        <option value="active">운영 중</option>
+                        <option value="grounded">운영 중단</option>
+                    </select>
+                </div>
+                <button type="submit">등록</button>
+              </fieldset>
+        </form>
+    </div>
+    <!-- <div>
+        <form id="scheduleOpenApi-form">
+
+        </form>
+    </div>
+    <div>
+        <form id="scheduleOpenApi-form">
+
+        </form>
+    </div> -->
+    <br>
+    <table id="airport-list">
+        <thead>
+            <tr>
+                <th>아이디</th>
+                <th>국가</th>
+                <th>한글이름</th>
+                <th>영문이름</th>
+                <th>공항코드1(iata)</th>
+                <th>공항코드2(icao)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for airport in airports %}
+            <tr>
+                <td>{{airport.id}}</td>
+                <td>{{airport.country}}</td>
+                <td>{{airport.korName}}</td>
+                <td>{{airport.engName}}</td>
+                <td>{{airport.iataCode}}</td>
+                <td>{{'운영 중' if airport.activeStatus == 'active' else '운영 중단'}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <table id="airline-list">
+        <thead>
+            <tr>
+                <th>항공사아이디</th>
+                <th>한글이름</th>
+                <th>영문이름</th>
+                <th>항공사코드(iata)</th>
+                <th>항공사코드(icao)</th>
+                <th>현재 운영상태</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for airline in airlines %}
+            <tr>
+                <td>{{airline.id}}</td>
+                <td>{{airline.korName}}</td>
+                <td>{{airline.engName}}</td>
+                <td>{{airline.iataCode}}</td>
+                <td>{{airline.icaoCode}}</td>
+                <td>{{airline.activeStatus}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/dataInput.js"></script>
+</body>
+</html>
